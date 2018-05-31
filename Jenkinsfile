@@ -8,6 +8,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
+                sh 'git config --global https.proxy http://10.103.152.35:3129'
                 sh 'mvn -B -DskipTests clean package' 
             }
         }
