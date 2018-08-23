@@ -5,7 +5,12 @@ pipeline {
             steps {
                 sh 'mvn -B -DskipTests clean package' 
         }
+    		post {
+       		  success{
+        	     archiveArtifacts 'target/*.jar'
     }
+  }
+}
         stage('Test') { 
             steps {
                 sh 'mvn test surefire-report:report' 
