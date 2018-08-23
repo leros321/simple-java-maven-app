@@ -4,6 +4,7 @@ pipeline {
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package' 
+                sh 'echo Branch Name: $BRANCH_NAME'
         }
     		post {
        		  success{
