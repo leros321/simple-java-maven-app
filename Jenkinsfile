@@ -8,7 +8,7 @@ pipeline {
     }
         stage('Test') { 
             steps {
-                sh 'mvn test' 
+                sh 'mvn test surefire-report:report' 
             }
             post {
                 always {
