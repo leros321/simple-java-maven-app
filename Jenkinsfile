@@ -4,8 +4,11 @@ pipeline {
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package' 
-                sh 'echo Branch Name: $BRANCH_NAME'
         }
+                script {
+                    currentBuild.displayName = "The name."
+                    currentBuild.description = "The best description."
+}
     		post {
        		  success{
         	     archiveArtifacts 'target/*.jar'
