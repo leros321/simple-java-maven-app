@@ -1,12 +1,30 @@
 pipeline {
-    agent any
+    agent any 
     stages {
-        stage("Build"){
+        stage('Build') { 
             steps {
-                script {
-                    currentBuild.displayName = "The name."
-                    currentBuild.description = "The best description."
+                sh 'mvn -B -DskipTests clean package' 
+                sh 'echo Branch Name: $BRANCH_NAME'
+        }
+    		post {
+       		  success{
+        	     archiveArtifacts 'target/*.jar'
+    }
+  }
+}
+        stage('Test') { 
+            steps {
+                sh 'mvn test surefire-report:report' 
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml' 
                 }
+            }
+        }
+        stage('Deliver') { 
+            steps {
+                sh './jenkins/scripts/deliver.sh' 
             }
         }
     }
